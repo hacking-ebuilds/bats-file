@@ -24,9 +24,11 @@ RESTRICT="!test? ( test )"
 RDEPEND="dev-util/bats-support"
 DEPEND="test? ( ${RDEPEND} )"
 
-PATCHES=(
-	"${FILESDIR}/fix-test-helper.patch"
-)
+src_prepare() {
+	cd "${WORKDIR}/${P}"
+	eapply -p0 "${FILESDIR}/fix-test-helper.patch"
+	eapply_user
+}
 
 src_test() {
 	TEST_DEPS_DIR="/usr/lib/" /usr/bin/bats --tap test || die "Tests failed"
