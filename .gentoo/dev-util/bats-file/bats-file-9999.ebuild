@@ -24,8 +24,12 @@ RESTRICT="!test? ( test )"
 RDEPEND="dev-util/bats-support"
 DEPEND="test? ( ${RDEPEND} )"
 
+PATCHES=(
+	"${FILESDIR}/fix-test-helper.patch"
+)
+
 src_test() {
-	/usr/bin/bats --tap test || die "Tests failed"
+	TEST_DEPS_DIR="/usr/lib/" /usr/bin/bats --tap test || die "Tests failed"
 }
 
 src_install() {
